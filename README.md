@@ -1,4 +1,4 @@
-# singlestore-gcp-looker-devday-02
+# singlestore-gcp-looker-devday-01
 SingleStore, GCP and Looker Developer Day 01
 
 Presentation Deck 
