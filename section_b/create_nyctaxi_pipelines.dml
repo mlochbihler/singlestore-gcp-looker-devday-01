@@ -1,26 +1,27 @@
 USE nyc_taxi;
 
 CREATE PIPELINE drivers
-AS LOAD DATA KAFKA 'public-kafka.memcompute.com:9092/drivers'
-BATCH_INTERVAL 2500
-REPLACE
+AS LOAD DATA GCS 'chengineer-singlestore/drivers'
+CREDENTIALS '{"access_id": "<workshop_access_id>", "secret_key": "<workshop_secret_key>"}'
+SKIP DUPLICATE KEY ERRORS
 INTO TABLE drivers
 FIELDS TERMINATED BY ',' ENCLOSED BY '' ESCAPED BY '\\'
 LINES TERMINATED BY '\n' STARTING BY '';
 
 CREATE PIPELINE trips
-AS LOAD DATA KAFKA 'public-kafka.memcompute.com:9092/trips'
-BATCH_INTERVAL 2500
-REPLACE
+AS LOAD DATA GCS 'chengineer-singlestore/trips'
+CREDENTIALS '{"access_id": "<workshop_access_id>", "secret_key": "<workshop_secret_key>"}'
+SKIP DUPLICATE KEY ERRORS
 INTO TABLE trips
 FIELDS TERMINATED BY ',' ENCLOSED BY '' ESCAPED BY '\\'
 LINES TERMINATED BY '\n' STARTING BY '';
 
+
 -- terminated by tab as the the polygons contain commas
 CREATE PIPELINE neighborhoods
-AS LOAD DATA S3 'memsql-datafeeds/nyc-taxi-data/'
-config '{"region":"us-east-1"}'
-REPLACE
+AS LOAD DATA GCS 'chengineer-singlestore/neighborhoods.tsv'
+CREDENTIALS '{"access_id": "<workshop_access_id>", "secret_key": "<workshop_secret_key>"}'
+SKIP DUPLICATE KEY ERRORS
 INTO TABLE neighborhoods
 FIELDS TERMINATED BY '\t' ENCLOSED BY '' ESCAPED BY '\\'
 LINES TERMINATED BY '\n' STARTING BY '';
