@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS nyc_taxi;
 CREATE DATABASE nyc_taxi;
 USE nyc_taxi;
 
-CREATE TABLE drivers (
+CREATE ROWSTORE TABLE drivers (
     id bigint(20) NOT NULL,
     first_name varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
     last_name varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE drivers (
     KEY location (location)
 );
 
-CREATE TABLE neighborhoods (
+CREATE ROWSTORE TABLE neighborhoods (
     id bigint(20) NOT NULL,
     name varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
     borough varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE neighborhoods (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE trips (
+CREATE ROWSTORE TABLE trips (
   id bigint(20) NOT NULL,
   status varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   pickup_location geographypoint NOT NULL DEFAULT 'Point(0 0)',
@@ -38,17 +38,17 @@ CREATE TABLE trips (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS triptotals (
+CREATE ROWSTORE TABLE IF NOT EXISTS triptotals (
 num_rides bigint(20) DEFAULT NULL,
 name varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
 SHARD KEY (name)
 );
  
-CREATE TABLE IF NOT EXISTS avgwait_passenger (
+CREATE ROWSTORE TABLE IF NOT EXISTS avgwait_passenger (
 avgwait_p DECIMAL(8,2) UNSIGNED DEFAULT NULL
 );
  
-CREATE TABLE IF NOT EXISTS avgdist (
+CREATE ROWSTORE TABLE IF NOT EXISTS avgdist (
 avgdist DECIMAL(8,2) UNSIGNED DEFAULT NULL
 );
  
@@ -56,25 +56,25 @@ CREATE TABLE IF NOT EXISTS avgridetime (
 avgridet DECIMAL(8,2) UNSIGNED DEFAULT NULL
 );
  
-CREATE TABLE IF NOT EXISTS avgcost (
+CREATE ROWSTORE TABLE IF NOT EXISTS avgcost (
 avgcost DECIMAL(8,2) UNSIGNED DEFAULT NULL
 );
  
-CREATE TABLE IF NOT EXISTS avgwait_driver (
+CREATE ROWSTORE TABLE IF NOT EXISTS avgwait_driver (
 avgwait_d DECIMAL(8,2) UNSIGNED DEFAULT NULL
 );
  
-CREATE TABLE IF NOT EXISTS avgriders (
+CREATE ROWSTORE TABLE IF NOT EXISTS avgriders (
 avgriders DECIMAL(8,2) UNSIGNED DEFAULT NULL
 );
  
-CREATE TABLE IF NOT EXISTS triptotalsc (
+CREATE ROWSTORE TABLE IF NOT EXISTS triptotalsc (
 num_rides bigint(20) DEFAULT NULL,
 name varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
 SHARD KEY (name)
 );
  
-CREATE TABLE nab_nyctaxi_scored (
+CREATE ROWSTORE TABLE nab_nyctaxi_scored (
      time_id CHAR(19) NOT NULL DEFAULT '2018-01-01 00:00:00',
      num_riders INT(11) DEFAULT 0,
      anomaly_score DECIMAL(7,5) DEFAULT 0.00,
