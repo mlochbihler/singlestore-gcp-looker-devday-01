@@ -19,7 +19,7 @@ LINES TERMINATED BY '\n' STARTING BY '';
 
 -- terminated by tab as the the polygons contain commas
 CREATE PIPELINE neighborhoods
-AS LOAD DATA GCS 'chengineer-singlestore/neighborhoods.tsv'
+AS LOAD DATA GCS '<your_gcs_bucket>/neighborhoods.tsv'
 CREDENTIALS '{"access_id": "<your_access_id>", "secret_key": "<your_secret_key>"}'
 SKIP DUPLICATE KEY ERRORS
 INTO TABLE neighborhoods
